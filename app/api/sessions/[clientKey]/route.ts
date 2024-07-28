@@ -19,19 +19,28 @@ export async function GET(
     return NextResponse.json(zod.error, { status: 400 });
   }
 
-  const session = await prisma.session.findUnique({
+  const sessions = await prisma.session.findMany({
     where: {
       clientKey: clientKey,
     },
+    orderBy: {
+      updatedAt: "asc",
+    },
   });
 
-  if (!session) {
-    return NextResponse.json({ error: "Session not found" }, { status: 404 });
+  if (sessions.length === 0) {
+    return NextResponse.json(
+      { error: "There are no sessions with this clientKey" },
+      { status: 404 }
+    );
   }
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.session.findMany({
     where: {
-      id: session.userId,
+      clientKey: clientKey,
+    },
+    orderBy: {
+      updatedAt: "asc",
     },
   });
 
@@ -39,5 +48,5 @@ export async function GET(
     return NextResponse.json({ error: "Not signed in" }, { status: 401 });
   }
 
-  return NextResponse.json({ user: user });
+  return NextResponse.json({ sessions: user });
 }
