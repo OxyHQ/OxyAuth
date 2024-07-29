@@ -42,6 +42,14 @@ export async function GET(
     orderBy: {
       updatedAt: "asc",
     },
+    select: {
+      id: true,
+      sessionToken: true,
+      userId: true,
+      expires: true,
+      createdAt: true,
+      updatedAt: true,
+    },
   });
 
   if (!user) {
