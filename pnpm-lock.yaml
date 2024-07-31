@@ -15,8 +15,8 @@ importers:
         specifier: ^3.3.3
         version: 3.3.4(react-hook-form@7.51.1(react@18.2.0))
       '@oxyhq/services':
-        specifier: ^0.0.55
-        version: 0.0.55(@types/react@18.2.67)
+        specifier: ^0.0.56
+        version: 0.0.56(@types/react@18.2.67)
       '@prisma/client':
         specifier: ^5.11.0
         version: 5.11.0(prisma@5.17.0)
@@ -391,8 +391,8 @@ packages:
   '@one-ini/wasm@0.1.1':
     resolution: {integrity: sha512-XuySG1E38YScSJoMlqovLru4KTUNSjgVTIjyh7qMX6aNN5HY5Ct5LhRJdxO79JtTzKfzV/bnWpz+zquYrISsvw==}
 
-  '@oxyhq/services@0.0.55':
-    resolution: {integrity: sha512-mYs0QzgDy/vXZSzpCO2/Vw63hfE+mAUqiJmbhU59BSX69it2Ap1B1eb7aRKwfMB1Sg5Ep247EKASptc2naNFFQ==}
+  '@oxyhq/services@0.0.56':
+    resolution: {integrity: sha512-tYhtN8gVjttTRXJJQloD4s4WffyMcT01tyzrk4BG8jefpa85Cou/OTYSxZCSAQJBEd5fVqjujeiEiOJ/tTCSxw==}
 
   '@panva/hkdf@1.2.1':
     resolution: {integrity: sha512-6oclG6Y3PiDFcoyk8srjLfVKyMfVCKJ27JwNPViuXziFpmdz+MZnZN/aKY0JGXgYuO/VghU0jcOAZgWXZ1Dmrw==}
@@ -3063,7 +3063,7 @@ snapshots:
 
   '@one-ini/wasm@0.1.1': {}
 
-  '@oxyhq/services@0.0.55(@types/react@18.2.67)':
+  '@oxyhq/services@0.0.56(@types/react@18.2.67)':
     dependencies:
       '@tanstack/react-query': 5.51.15(react@18.3.1)
       axios: 1.7.2
