@@ -22,7 +22,7 @@ const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
       </nav>
       <div className="w-full flex flex-col gap-5 align-middle text-center items-center">
         <Avatar className="m-auto w-20 h-20">
-          <AvatarImage src={user?.image || ""} />
+          <AvatarImage src={user?.avatar || ""} />
           <AvatarFallback className="bg-sky-500">
             <FaUser className="text-white" />
           </AvatarFallback>
