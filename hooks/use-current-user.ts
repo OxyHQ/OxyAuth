@@ -1,7 +1,7 @@
-import { useSession } from "next-auth/react";
+import { useOxySession } from "@oxyhq/services";
 
 export const useCurrentUser = () => {
-  const session = useSession();
+  const { session } = useOxySession();
 
-  return session.data?.user;
+  return session?.user;
 };
