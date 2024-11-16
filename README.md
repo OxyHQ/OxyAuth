@@ -133,6 +133,30 @@ pnpm run remove-content --docs
 
 - [Vercel Analytics](https://vercel.com/analytics) – Track unique visitors, pageviews, and more in a privacy-friendly way
 
+## Admin Panel
+
+The admin panel is a crucial part of the Oxy Auth project, providing functionalities for user management and statistics. It is accessible only to users with the ADMIN role.
+
+### Features
+
+- **User Statistics**: Displays the total number of users, admin users, and regular users.
+- **Role-Based Access**: Ensures that only users with the ADMIN role can access the admin panel.
+
+### Using the User Statistics Feature
+
+To use the user statistics feature in the admin panel, follow these steps:
+
+1. **Access the Admin Panel**: Navigate to the admin panel by logging in with an account that has the ADMIN role.
+2. **View Statistics**: The admin panel will display the total number of users, admin users, and regular users.
+
+### Fetching User Statistics with Prisma
+
+The user statistics feature in the admin panel uses Prisma to fetch data from the database. The following statistics are fetched:
+
+- **Total Users**: The total number of users in the database.
+- **Admin Users**: The number of users with the ADMIN role.
+- **Regular Users**: The number of users with the USER role.
+
 ## Author
 
 This project is based on [Next SaaS Stripe Starter](https://next-saas-stripe-starter.vercel.app/).

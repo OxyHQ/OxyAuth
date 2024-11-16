@@ -39,7 +39,6 @@ export default async function AdminPage() {
           <InfoCard title="Total Users" value={totalUsers} />
           <InfoCard title="Admin Users" value={adminUsers} />
           <InfoCard title="Regular Users" value={regularUsers} />
-          <InfoCard />
         </div>
         <TransactionsList />
         <TransactionsList />
