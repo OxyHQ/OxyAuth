@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { generateClientKey } from "@/lib/clientKey";
 
 const useLocalStorage = <T>(
   key: string,
@@ -17,10 +16,6 @@ const useLocalStorage = <T>(
     const item = window.localStorage.getItem(key);
     if (item) {
       setStoredValue(JSON.parse(item));
-    } else if (key === "clientKey") {
-      const newClientKey = generateClientKey();
-      window.localStorage.setItem(key, JSON.stringify(newClientKey));
-      setStoredValue(newClientKey as unknown as T);
     }
   }, [key]);
 
@@ -36,20 +31,6 @@ const useLocalStorage = <T>(
     window.localStorage.setItem(key, JSON.stringify(value));
   };
 
-  const generateClientKey = () => {
-    if (typeof window === "undefined" || !window.localStorage) {
-      console.error("localStorage is not defined");
-      return;
-    }
-
-    let clientKey = window.localStorage.getItem("clientKey");
-    if (!clientKey) {
-      clientKey = generateClientKey();
-      window.localStorage.setItem("clientKey", clientKey);
-    }
-    return clientKey;
-  };
-
   const getClientKey = () => {
     if (typeof window === "undefined" || !window.localStorage) {
       console.error("localStorage is not defined");
@@ -59,7 +40,7 @@ const useLocalStorage = <T>(
     return window.localStorage.getItem("clientKey");
   };
 
-  return [storedValue, setValue, generateClientKey, getClientKey];
+  return [storedValue, setValue, getClientKey];
 };
 
 export default useLocalStorage;

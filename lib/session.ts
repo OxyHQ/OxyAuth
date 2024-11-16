@@ -2,7 +2,6 @@ import "server-only";
 
 import { cache } from "react";
 import { auth } from "@/auth";
-import { v4 as uuidv4 } from "uuid";
 
 export const getCurrentUser = cache(async () => {
   const session = await auth();
@@ -10,8 +9,8 @@ export const getCurrentUser = cache(async () => {
     return undefined;
   }
 
-  // Retrieve clientKey from request headers
-  const clientKey = session.clientKey || uuidv4();
+  // Retrieve clientKey from session
+  const clientKey = session.clientKey;
 
   return {
     ...session.user,

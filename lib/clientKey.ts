@@ -10,12 +10,7 @@ export function getClientKeyFromLocalStorage() {
     return null;
   }
 
-  let clientKey = localStorage.getItem("clientKey");
-  if (!clientKey) {
-    clientKey = generateClientKey();
-    localStorage.setItem("clientKey", clientKey);
-  }
-  return clientKey;
+  return localStorage.getItem("clientKey");
 }
 
 export function getClientKeyFromSession(session) {
@@ -29,4 +24,17 @@ export function setClientKeyToLocalStorage(clientKey) {
   }
 
   localStorage.setItem("clientKey", clientKey);
+}
+
+export function initializeClientKey() {
+  if (typeof window === "undefined" || !window.localStorage) {
+    console.error("localStorage is not defined");
+    return;
+  }
+
+  let clientKey = localStorage.getItem("clientKey");
+  if (!clientKey) {
+    clientKey = generateClientKey();
+    localStorage.setItem("clientKey", clientKey);
+  }
 }
