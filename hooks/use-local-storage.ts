@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const useLocalStorage = <T>(
   key: string,
@@ -11,6 +12,10 @@ const useLocalStorage = <T>(
     const item = window.localStorage.getItem(key);
     if (item) {
       setStoredValue(JSON.parse(item));
+    } else if (key === "clientKey") {
+      const newClientKey = uuidv4();
+      window.localStorage.setItem(key, JSON.stringify(newClientKey));
+      setStoredValue(newClientKey as unknown as T);
     }
   }, [key]);
 

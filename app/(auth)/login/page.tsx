@@ -1,6 +1,7 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { Metadata } from "next";
 import Link from "next/link";
+import { v4 as uuidv4 } from "uuid";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -13,6 +14,14 @@ export const metadata: Metadata = {
 };
 
 export default function LoginPage() {
+  useEffect(() => {
+    let clientKey = localStorage.getItem("clientKey");
+    if (!clientKey) {
+      clientKey = uuidv4();
+      localStorage.setItem("clientKey", clientKey);
+    }
+  }, []);
+
   return (
     <div className="container flex h-screen w-screen flex-col items-center justify-center">
       <Link
