@@ -31,16 +31,7 @@ const useLocalStorage = <T>(
     window.localStorage.setItem(key, JSON.stringify(value));
   };
 
-  const getClientKey = () => {
-    if (typeof window === "undefined" || !window.localStorage) {
-      console.error("localStorage is not defined");
-      return null;
-    }
-
-    return window.localStorage.getItem("clientKey");
-  };
-
-  return [storedValue, setValue, getClientKey];
+  return [storedValue, setValue];
 };
 
 export default useLocalStorage;

@@ -26,15 +26,20 @@ export function setClientKeyToLocalStorage(clientKey) {
   localStorage.setItem("clientKey", clientKey);
 }
 
+export function getOrCreateClientKey() {
+  let clientKey = getClientKeyFromLocalStorage();
+  if (!clientKey) {
+    clientKey = generateClientKey();
+    setClientKeyToLocalStorage(clientKey);
+  }
+  return clientKey;
+}
+
 export function initializeClientKey() {
   if (typeof window === "undefined" || !window.localStorage) {
     console.error("localStorage is not defined");
     return;
   }
 
-  let clientKey = localStorage.getItem("clientKey");
-  if (!clientKey) {
-    clientKey = generateClientKey();
-    localStorage.setItem("clientKey", clientKey);
-  }
+  getOrCreateClientKey();
 }

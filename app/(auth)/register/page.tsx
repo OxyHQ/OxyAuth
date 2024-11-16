@@ -1,4 +1,6 @@
 import Link from "next/link"
+import { useEffect } from "react"
+import { initializeClientKey } from "@/lib/clientKey"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -12,6 +14,10 @@ export const metadata = {
 }
 
 export default function RegisterPage() {
+  useEffect(() => {
+    initializeClientKey();
+  }, []);
+
   return (
     <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
       <Link

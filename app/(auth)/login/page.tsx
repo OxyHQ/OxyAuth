@@ -1,7 +1,7 @@
 import { Suspense, useEffect } from "react";
 import { Metadata } from "next";
 import Link from "next/link";
-import { getClientKeyFromLocalStorage } from "@/lib/clientKey";
+import { initializeClientKey } from "@/lib/clientKey";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -15,14 +15,7 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   useEffect(() => {
-    if (typeof window !== "undefined" && window.localStorage) {
-      let clientKey = getClientKeyFromLocalStorage();
-      if (!clientKey) {
-        console.error("clientKey is not defined in localStorage");
-      }
-    } else {
-      console.error("localStorage is not defined");
-    }
+    initializeClientKey();
   }, []);
 
   return (
