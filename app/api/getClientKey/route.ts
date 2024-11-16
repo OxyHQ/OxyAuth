@@ -13,9 +13,11 @@ export async function GET(request: Request) {
 
   let redirectUrl;
   try {
-    redirectUrl = new URL(request.headers.get("referer") || process.env.NEXT_PUBLIC_APP_URL);
+    const referer = request.headers.get("referer");
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+    redirectUrl = new URL(referer || appUrl);
   } catch (error) {
-    redirectUrl = new URL(process.env.NEXT_PUBLIC_APP_URL);
+    redirectUrl = new URL(process.env.NEXT_PUBLIC_APP_URL || "");
   }
   redirectUrl.searchParams.set("clientKey", clientKey);
 
