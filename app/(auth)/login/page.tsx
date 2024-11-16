@@ -15,10 +15,14 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   useEffect(() => {
-    let clientKey = localStorage.getItem("clientKey");
-    if (!clientKey) {
-      clientKey = uuidv4();
-      localStorage.setItem("clientKey", clientKey);
+    if (typeof window !== "undefined" && window.localStorage) {
+      let clientKey = localStorage.getItem("clientKey");
+      if (!clientKey) {
+        clientKey = uuidv4();
+        localStorage.setItem("clientKey", clientKey);
+      }
+    } else {
+      console.error("localStorage is not defined");
     }
   }, []);
 

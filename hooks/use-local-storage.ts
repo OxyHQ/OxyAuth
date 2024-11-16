@@ -8,6 +8,11 @@ const useLocalStorage = <T>(
   const [storedValue, setStoredValue] = useState(initialValue);
 
   useEffect(() => {
+    if (typeof window === "undefined" || !window.localStorage) {
+      console.error("localStorage is not defined");
+      return;
+    }
+
     // Retrieve from localStorage
     const item = window.localStorage.getItem(key);
     if (item) {
@@ -20,6 +25,11 @@ const useLocalStorage = <T>(
   }, [key]);
 
   const setValue = (value: T) => {
+    if (typeof window === "undefined" || !window.localStorage) {
+      console.error("localStorage is not defined");
+      return;
+    }
+
     // Save state
     setStoredValue(value);
     // Save to localStorage
