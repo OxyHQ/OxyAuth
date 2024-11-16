@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum UserRole {
@@ -51,10 +51,13 @@ model Session {
 
 model User {
   id            String    @id @default(cuid())
+  username      String?   @unique
   name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  description   String?
+  color         String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @default(now()) @map(name: "updated_at")
   role          UserRole  @default(USER)
