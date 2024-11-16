@@ -4,7 +4,7 @@ import { constructMetadata, getBlurDataURL } from "@/lib/utils";
 import { BlogPosts } from "@/components/content/blog-posts";
 
 export const metadata = constructMetadata({
-  title: "Blog – Next Template",
+  title: "Blog – Oxy Auth",
   description: "Latest news and updates from Next Auth Roles Template.",
 });
 

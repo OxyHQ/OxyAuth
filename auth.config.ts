@@ -17,7 +17,7 @@ export default {
     }),
     Resend({
       apiKey: env.RESEND_API_KEY,
-      from: "Next Template App <onboarding@resend.dev>",
+      from: "Oxy Auth <onboarding@oxy.so>",
     }),
   ],
 } satisfies NextAuthConfig;

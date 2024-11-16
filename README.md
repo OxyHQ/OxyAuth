@@ -1,5 +1,5 @@
 <a href="https://next-auth-roles-template.vercel.app">
-  <img alt="Next Template" src="public/_static/og.jpg">
+  <img alt="Oxy" src="public/_static/og.jpg">
   <h1 align="center">Next Auth Roles Template</h1>
 </a>
 

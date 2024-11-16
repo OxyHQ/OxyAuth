@@ -7,7 +7,7 @@ import { DashboardHeader } from "@/components/dashboard/header";
 import { EmptyPlaceholder } from "@/components/shared/empty-placeholder";
 
 export const metadata = constructMetadata({
-  title: "Orders – Next Template",
+  title: "Orders – Oxy Auth",
   description: "Check and manage your latest orders.",
 });
 

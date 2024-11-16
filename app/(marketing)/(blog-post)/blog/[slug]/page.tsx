@@ -43,7 +43,7 @@ export async function generateMetadata({
   const { title, description, image } = post;
 
   return constructMetadata({
-    title: `${title} – Next Template`,
+    title: `${title} – Oxy Auth`,
     description: description,
     image,
   });
