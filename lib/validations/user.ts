@@ -8,3 +8,7 @@ export const userNameSchema = z.object({
 export const userRoleSchema = z.object({
   role: z.nativeEnum(UserRole),
 });
+
+export const userEmailSchema = z.object({
+  email: z.string().email(),
+});

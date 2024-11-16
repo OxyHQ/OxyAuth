@@ -6,6 +6,7 @@ import { DeleteAccountSection } from "@/components/dashboard/delete-account";
 import { DashboardHeader } from "@/components/dashboard/header";
 import { UserNameForm } from "@/components/forms/user-name-form";
 import { UserRoleForm } from "@/components/forms/user-role-form";
+import { UserEmailForm } from "@/components/forms/user-email-form";
 
 export const metadata = constructMetadata({
   title: "Settings – Oxy Auth",
@@ -26,6 +27,7 @@ export default async function SettingsPage() {
       <div className="divide-y divide-muted pb-10">
         <UserNameForm user={{ id: user.id, name: user.name || "" }} />
         <UserRoleForm user={{ id: user.id, role: user.role }} />
+        <UserEmailForm user={{ id: user.id, email: user.email || "" }} />
         <DeleteAccountSection />
       </div>
     </>
