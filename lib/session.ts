@@ -8,16 +8,5 @@ export const getCurrentUser = cache(async () => {
   if (!session?.user) {
     return undefined;
   }
-
-  // Retrieve clientKey from localStorage
-  let clientKey = localStorage.getItem("clientKey");
-  if (!clientKey) {
-    clientKey = uuidv4();
-    localStorage.setItem("clientKey", clientKey);
-  }
-
-  return {
-    ...session.user,
-    clientKey,
-  };
+  return session.user;
 });
