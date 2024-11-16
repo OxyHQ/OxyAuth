@@ -5,6 +5,10 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const callbackUrl = searchParams.get("callback");
 
+  if (typeof localStorage === "undefined") {
+    return NextResponse.json({ error: "localStorage is not defined" }, { status: 500 });
+  }
+
   let clientKey = localStorage.getItem("clientKey");
 
   if (!clientKey) {

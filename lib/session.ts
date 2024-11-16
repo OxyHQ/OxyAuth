@@ -2,6 +2,7 @@ import "server-only";
 
 import { cache } from "react";
 import { auth } from "@/auth";
+import { v4 as uuidv4 } from "uuid";
 
 export const getCurrentUser = cache(async () => {
   const session = await auth();
