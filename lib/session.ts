@@ -10,12 +10,8 @@ export const getCurrentUser = cache(async () => {
     return undefined;
   }
 
-  // Retrieve clientKey from localStorage
-  let clientKey = localStorage.getItem("clientKey");
-  if (!clientKey) {
-    clientKey = uuidv4();
-    localStorage.setItem("clientKey", clientKey);
-  }
+  // Retrieve clientKey from request headers
+  const clientKey = session.clientKey || uuidv4();
 
   return {
     ...session.user,
