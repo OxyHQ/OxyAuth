@@ -27,3 +27,27 @@ export const getUserById = async (id: string) => {
     return null;
   }
 };
+
+export const getUserStatistics = async () => {
+  try {
+    const totalUsers = await prisma.user.count();
+    const adminUsers = await prisma.user.count({
+      where: {
+        role: "ADMIN",
+      },
+    });
+    const regularUsers = await prisma.user.count({
+      where: {
+        role: "USER",
+      },
+    });
+
+    return {
+      totalUsers,
+      adminUsers,
+      regularUsers,
+    };
+  } catch {
+    return null;
+  }
+};
