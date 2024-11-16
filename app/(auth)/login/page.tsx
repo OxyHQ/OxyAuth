@@ -1,7 +1,7 @@
 import { Suspense, useEffect } from "react";
 import { Metadata } from "next";
 import Link from "next/link";
-import { v4 as uuidv4 } from "uuid";
+import { getClientKeyFromLocalStorage, setClientKeyToLocalStorage } from "@/lib/clientKey";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
@@ -16,10 +16,10 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   useEffect(() => {
     if (typeof window !== "undefined" && window.localStorage) {
-      let clientKey = localStorage.getItem("clientKey");
+      let clientKey = getClientKeyFromLocalStorage();
       if (!clientKey) {
-        clientKey = uuidv4();
-        localStorage.setItem("clientKey", clientKey);
+        clientKey = generateClientKey();
+        setClientKeyToLocalStorage(clientKey);
       }
     } else {
       console.error("localStorage is not defined");

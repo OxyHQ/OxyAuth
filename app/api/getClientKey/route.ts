@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { v4 as uuidv4 } from "uuid";
+import { generateClientKey } from "@/lib/clientKey";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   let clientKey = request.headers.get("clientKey");
 
   if (!clientKey) {
-    clientKey = uuidv4();
+    clientKey = generateClientKey();
   }
 
   let redirectUrl;
