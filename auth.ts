@@ -20,46 +20,22 @@ export const {
   auth,
 } = NextAuth({
   adapter: PrismaAdapter(prisma),
-  session: { strategy: "jwt" },
+  session: { strategy: "database" },
   pages: {
     signIn: "/login",
     // error: "/auth/error",
   },
   callbacks: {
-    async session({ token, session }) {
+    async session({ session }) {
       if (session.user) {
-        if (token.sub) {
-          session.user.id = token.sub;
-        }
+        const dbUser = await getUserById(session.user.id);
 
-        if (token.email) {
-          session.user.email = token.email;
+        if (dbUser) {
+          session.user.role = dbUser.role;
         }
-
-        if (token.role) {
-          session.user.role = token.role;
-        }
-
-        session.user.name = token.name;
-        session.user.image = token.picture;
       }
 
       return session;
-    },
-
-    async jwt({ token }) {
-      if (!token.sub) return token;
-
-      const dbUser = await getUserById(token.sub);
-
-      if (!dbUser) return token;
-
-      token.name = dbUser.name;
-      token.email = dbUser.email;
-      token.picture = dbUser.image;
-      token.role = dbUser.role;
-
-      return token;
     },
   },
   ...authConfig,
