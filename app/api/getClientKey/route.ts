@@ -11,11 +11,21 @@ export async function GET(request: Request) {
     clientKey = uuidv4();
   }
 
-  const redirectUrl = new URL(request.headers.get("referer") || "/");
+  let redirectUrl;
+  try {
+    redirectUrl = new URL(request.headers.get("referer") || process.env.NEXT_PUBLIC_APP_URL);
+  } catch (error) {
+    redirectUrl = new URL(process.env.NEXT_PUBLIC_APP_URL);
+  }
   redirectUrl.searchParams.set("clientKey", clientKey);
 
   if (callbackUrl) {
-    redirectUrl.searchParams.set("callback", callbackUrl);
+    try {
+      new URL(callbackUrl);
+      redirectUrl.searchParams.set("callback", callbackUrl);
+    } catch (error) {
+      // Ignore invalid callbackUrl
+    }
   }
 
   return NextResponse.redirect(redirectUrl.toString());
