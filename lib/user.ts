@@ -70,3 +70,27 @@ export const getAllActiveSessionsForUser = async (userId: string) => {
     return null;
   }
 };
+
+export const getAllActiveSessionsForUserInAccountSwitcher = async (userId: string) => {
+  try {
+    const sessions = await getAllActiveSessionsForUser(userId);
+    if (!sessions) {
+      return [];
+    }
+
+    const accounts = await Promise.all(
+      sessions.map(async (session) => {
+        const user = await getUserById(session.userId);
+        return {
+          name: user?.name || "",
+          email: user?.email || "",
+          image: user?.image || "",
+        };
+      })
+    );
+
+    return accounts;
+  } catch {
+    return [];
+  }
+};
