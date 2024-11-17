@@ -31,11 +31,13 @@ export default function AccountSwitcher({
     return <AccountSwitcherPlaceholder />;
   }
 
-  const accounts: AccountType[] = session.user.sessions.map((session) => ({
-    name: session.user.name,
-    email: session.user.email,
-    image: session.user.image,
-  }));
+  const accounts: AccountType[] = session.user
+    ? session.user.sessions.map((session) => ({
+        name: session.user.name,
+        email: session.user.email,
+        image: session.user.image,
+      }))
+    : [];
 
   const selected: AccountType = accounts[0];
 
