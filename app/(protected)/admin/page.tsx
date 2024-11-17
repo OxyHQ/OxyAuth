@@ -35,6 +35,19 @@ export default async function AdminPage() {
     take: 5,
   });
 
+  const lastMonth = new Date();
+  lastMonth.setMonth(lastMonth.getMonth() - 1);
+
+  const usersLastMonth = await prisma.user.count({
+    where: {
+      createdAt: {
+        gte: lastMonth,
+      },
+    },
+  });
+
+  const userGrowthPercentage = ((totalUsers - usersLastMonth) / usersLastMonth) * 100;
+
   return (
     <>
       <DashboardHeader
@@ -46,6 +59,7 @@ export default async function AdminPage() {
           <InfoCard title="Total Users" value={totalUsers} />
           <InfoCard title="Admin Users" value={adminUsers} />
           <InfoCard title="Regular Users" value={regularUsers} />
+          <InfoCard title="User Growth" value={userGrowthPercentage.toFixed(1) + "%"} />
         </div>
         <RecentUsersList users={recentUsers} />
       </div>
