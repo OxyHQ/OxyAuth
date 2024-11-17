@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { UserAvatar } from "@/components/shared/user-avatar";
+import AccountSwitcher from "@/components/dashboard/project-switcher";
 
 export function UserAccountNav() {
   const { data: session } = useSession();
@@ -181,6 +182,8 @@ export function UserAccountNav() {
             <p className="text-sm">Log out </p>
           </div>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <AccountSwitcher />
       </DropdownMenuContent>
     </DropdownMenu>
   );

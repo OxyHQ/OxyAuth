@@ -13,27 +13,27 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-type ProjectType = {
-  title: string;
-  slug: string;
-  color: string;
+type AccountType = {
+  name: string;
+  email: string;
+  image: string;
 };
 
-const projects: ProjectType[] = [
+const accounts: AccountType[] = [
   {
-    title: "Project 1",
-    slug: "project-number-one",
-    color: "bg-red-500",
+    name: "Account 1",
+    email: "account1@example.com",
+    image: "https://via.placeholder.com/150",
   },
   {
-    title: "Project 2",
-    slug: "project-number-two",
-    color: "bg-blue-500",
+    name: "Account 2",
+    email: "account2@example.com",
+    image: "https://via.placeholder.com/150",
   },
 ];
-const selected: ProjectType = projects[1];
+const selected: AccountType = accounts[0];
 
-export default function ProjectSwitcher({
+export default function AccountSwitcher({
   large = false,
 }: {
   large?: boolean;
@@ -41,8 +41,8 @@ export default function ProjectSwitcher({
   const { data: session, status } = useSession();
   const [openPopover, setOpenPopover] = useState(false);
 
-  if (!projects || status === "loading") {
-    return <ProjectSwitcherPlaceholder />;
+  if (!accounts || status === "loading") {
+    return <AccountSwitcherPlaceholder />;
   }
 
   return (
@@ -55,11 +55,10 @@ export default function ProjectSwitcher({
             onClick={() => setOpenPopover(!openPopover)}
           >
             <div className="flex items-center space-x-3 pr-2">
-              <div
-                className={cn(
-                  "size-3 shrink-0 rounded-full",
-                  selected.color,
-                )}
+              <img
+                src={selected.image}
+                alt={selected.name}
+                className="size-3 shrink-0 rounded-full"
               />
               <div className="flex items-center space-x-3">
                 <span
@@ -68,7 +67,7 @@ export default function ProjectSwitcher({
                     large ? "w-full" : "max-w-[80px]",
                   )}
                 >
-                  {selected.slug}
+                  {selected.name}
                 </span>
               </div>
             </div>
@@ -79,9 +78,9 @@ export default function ProjectSwitcher({
           </Button>
         </PopoverTrigger>
         <PopoverContent align="start" className="max-w-60 p-2">
-          <ProjectList
+          <AccountList
             selected={selected}
-            projects={projects}
+            accounts={accounts}
             setOpenPopover={setOpenPopover}
           />
         </PopoverContent>
@@ -90,20 +89,20 @@ export default function ProjectSwitcher({
   );
 }
 
-function ProjectList({
+function AccountList({
   selected,
-  projects,
+  accounts,
   setOpenPopover,
 }: {
-  selected: ProjectType;
-  projects: ProjectType[];
+  selected: AccountType;
+  accounts: AccountType[];
   setOpenPopover: (open: boolean) => void;
 }) {
   return (
     <div className="flex flex-col gap-1">
-      {projects.map(({ slug, color }) => (
+      {accounts.map(({ name, email, image }) => (
         <Link
-          key={slug}
+          key={email}
           className={cn(
             buttonVariants({ variant: "ghost" }),
             "relative flex h-9 items-center gap-3 p-3 text-muted-foreground hover:text-foreground",
@@ -111,17 +110,21 @@ function ProjectList({
           href="#"
           onClick={() => setOpenPopover(false)}
         >
-          <div className={cn("size-3 shrink-0 rounded-full", color)} />
+          <img
+            src={image}
+            alt={name}
+            className="size-3 shrink-0 rounded-full"
+          />
           <span
             className={`flex-1 truncate text-sm ${
-              selected.slug === slug
+              selected.email === email
                 ? "font-medium text-foreground"
                 : "font-normal"
             }`}
           >
-            {slug}
+            {name}
           </span>
-          {selected.slug === slug && (
+          {selected.email === email && (
             <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-foreground">
               <Check size={18} aria-hidden="true" />
             </span>
@@ -136,13 +139,13 @@ function ProjectList({
         }}
       >
         <Plus size={18} className="absolute left-2.5 top-2" />
-        <span className="flex-1 truncate text-center">New Project</span>
+        <span className="flex-1 truncate text-center">New Account</span>
       </Button>
     </div>
   );
 }
 
-function ProjectSwitcherPlaceholder() {
+function AccountSwitcherPlaceholder() {
   return (
     <div className="flex animate-pulse items-center space-x-1.5 rounded-lg px-1.5 py-2 sm:w-60">
       <div className="h-8 w-36 animate-pulse rounded-md bg-muted xl:w-[180px]" />

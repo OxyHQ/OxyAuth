@@ -11,6 +11,11 @@ declare module "next-auth" {
   interface Session {
     user: {
       role: UserRole;
+      sessions: Array<{
+        id: string;
+        userId: string;
+        expires: Date;
+      }>;
     } & DefaultSession["user"];
   }
 }
@@ -32,6 +37,13 @@ export const {
 
         if (dbUser) {
           session.user.role = dbUser.role;
+
+          const sessions = await prisma.session.findMany({
+            where: { userId: dbUser.id },
+            select: { id: true, userId: true, expires: true },
+          });
+
+          session.user.sessions = sessions;
         }
       }
 
