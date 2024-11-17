@@ -1,11 +1,11 @@
 import { redirect } from "next/navigation";
 
+import { prisma } from "@/lib/db";
 import { getCurrentUser } from "@/lib/session";
 import { constructMetadata } from "@/lib/utils";
 import { DashboardHeader } from "@/components/dashboard/header";
 import InfoCard from "@/components/dashboard/info-card";
 import RecentUsersList from "@/components/dashboard/recent-users-list";
-import { prisma } from "@/lib/db";
 
 export const metadata = constructMetadata({
   title: "Admin – Oxy Auth",
@@ -33,6 +33,20 @@ export default async function AdminPage() {
       createdAt: "desc",
     },
     take: 5,
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      createdAt: true,
+    },
+    where: {
+      name: {
+        not: null,
+      },
+      email: {
+        not: null,
+      },
+    },
   });
 
   const lastMonth = new Date();
@@ -46,7 +60,8 @@ export default async function AdminPage() {
     },
   });
 
-  const userGrowthPercentage = ((totalUsers - usersLastMonth) / usersLastMonth) * 100;
+  const userGrowthPercentage =
+    ((totalUsers - usersLastMonth) / usersLastMonth) * 100;
 
   return (
     <>
@@ -59,7 +74,10 @@ export default async function AdminPage() {
           <InfoCard title="Total Users" value={totalUsers} />
           <InfoCard title="Admin Users" value={adminUsers} />
           <InfoCard title="Regular Users" value={regularUsers} />
-          <InfoCard title="User Growth" value={userGrowthPercentage.toFixed(1) + "%"} />
+          <InfoCard
+            title="User Growth"
+            value={userGrowthPercentage.toFixed(1) + "%"}
+          />
         </div>
         <RecentUsersList users={recentUsers} />
       </div>
