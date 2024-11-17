@@ -4,6 +4,11 @@ import { JWT } from "next-auth/jwt";
 
 export type ExtendedUser = User & {
   role: UserRole;
+  sessions: Array<{
+    id: string;
+    userId: string;
+    expires: Date;
+  }>;
 };
 
 declare module "next-auth/jwt" {

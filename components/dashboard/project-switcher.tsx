@@ -19,20 +19,6 @@ type AccountType = {
   image: string;
 };
 
-const accounts: AccountType[] = [
-  {
-    name: "Account 1",
-    email: "account1@example.com",
-    image: "https://via.placeholder.com/150",
-  },
-  {
-    name: "Account 2",
-    email: "account2@example.com",
-    image: "https://via.placeholder.com/150",
-  },
-];
-const selected: AccountType = accounts[0];
-
 export default function AccountSwitcher({
   large = false,
 }: {
@@ -41,9 +27,17 @@ export default function AccountSwitcher({
   const { data: session, status } = useSession();
   const [openPopover, setOpenPopover] = useState(false);
 
-  if (!accounts || status === "loading") {
+  if (!session || status === "loading") {
     return <AccountSwitcherPlaceholder />;
   }
+
+  const accounts: AccountType[] = session.user.sessions.map((session) => ({
+    name: session.user.name,
+    email: session.user.email,
+    image: session.user.image,
+  }));
+
+  const selected: AccountType = accounts[0];
 
   return (
     <div>
