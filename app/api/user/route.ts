@@ -22,5 +22,10 @@ export const DELETE = auth(async (req) => {
     return new Response("Internal server error", { status: 500 });
   }
 
-  return new Response("User deleted successfully!", { status: 200 });
+  const response = new Response("User deleted successfully!", { status: 200 });
+  response.headers.set('Access-Control-Allow-Origin', '*');
+  response.headers.set('Access-Control-Allow-Methods', 'DELETE, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
+  return response;
 });

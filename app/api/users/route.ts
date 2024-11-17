@@ -36,7 +36,12 @@ export async function GET(request: Request) {
       take: limit ? parseInt(limit) : undefined,
     });
 
-    return NextResponse.json(users, { status: 200 });
+    const response = NextResponse.json(users, { status: 200 });
+    response.headers.set('Access-Control-Allow-Origin', '*');
+    response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
+    response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
+
+    return response;
   } catch (error: any) {
     return NextResponse.json(error.message, { status: 500 });
   }
