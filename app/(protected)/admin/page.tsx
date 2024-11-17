@@ -4,7 +4,7 @@ import { getCurrentUser } from "@/lib/session";
 import { constructMetadata } from "@/lib/utils";
 import { DashboardHeader } from "@/components/dashboard/header";
 import InfoCard from "@/components/dashboard/info-card";
-import TransactionsList from "@/components/dashboard/transactions-list";
+import RecentUsersList from "@/components/dashboard/recent-users-list";
 import { prisma } from "@/lib/db";
 
 export const metadata = constructMetadata({
@@ -28,6 +28,13 @@ export default async function AdminPage() {
     },
   });
 
+  const recentUsers = await prisma.user.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    take: 5,
+  });
+
   return (
     <>
       <DashboardHeader
@@ -40,8 +47,7 @@ export default async function AdminPage() {
           <InfoCard title="Admin Users" value={adminUsers} />
           <InfoCard title="Regular Users" value={regularUsers} />
         </div>
-        <TransactionsList />
-        <TransactionsList />
+        <RecentUsersList users={recentUsers} />
       </div>
     </>
   );
