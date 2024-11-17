@@ -33,7 +33,7 @@ export default function AccountSwitcher({
 
   const accounts: AccountType[] = session.user
     ? session.user.sessions.map((session) => ({
-        name: session.user.name,
+        name: session.user?.name || "Unknown",
         email: session.user.email,
         image: session.user.image,
       }))
