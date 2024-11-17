@@ -32,7 +32,7 @@ export async function GET(req: Request) {
 
     const githubName = "mickasmt";
 
-    const response = new ImageResponse(
+    return new ImageResponse(
       (
         <div
           tw="flex relative flex-col p-12 w-full h-full items-start"
@@ -147,17 +147,21 @@ export async function GET(req: Request) {
             style: "normal",
           },
         ],
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        },
       }
     )
-
-    response.headers.set('Access-Control-Allow-Origin', '*');
-    response.headers.set('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    response.headers.set('Access-Control-Allow-Headers', 'Content-Type');
-
-    return response;
   } catch (error) {
     return new Response(`Failed to generate image`, {
       status: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
     })
   }
 }

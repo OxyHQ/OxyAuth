@@ -25,6 +25,7 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["@prisma/client"],
   },
+  crossOrigin: 'anonymous',
 };
 
 module.exports = withContentlayer(nextConfig);
