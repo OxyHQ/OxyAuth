@@ -49,21 +49,25 @@ export default function AccountSwitcher({
             onClick={() => setOpenPopover(!openPopover)}
           >
             <div className="flex items-center space-x-3 pr-2">
-              <img
-                src={selected.image}
-                alt={selected.name}
-                className="size-3 shrink-0 rounded-full"
-              />
-              <div className="flex items-center space-x-3">
-                <span
-                  className={cn(
-                    "inline-block truncate text-sm font-medium xl:max-w-[120px]",
-                    large ? "w-full" : "max-w-[80px]",
-                  )}
-                >
-                  {selected.name}
-                </span>
-              </div>
+              {selected && (
+                <>
+                  <img
+                    src={selected.image}
+                    alt={selected.name}
+                    className="size-3 shrink-0 rounded-full"
+                  />
+                  <div className="flex items-center space-x-3">
+                    <span
+                      className={cn(
+                        "inline-block truncate text-sm font-medium xl:max-w-[120px]",
+                        large ? "w-full" : "max-w-[80px]",
+                      )}
+                    >
+                      {selected.name}
+                    </span>
+                  </div>
+                </>
+              )}
             </div>
             <ChevronsUpDown
               className="size-4 text-muted-foreground"
