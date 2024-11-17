@@ -1,15 +1,15 @@
 import { auth } from "@/auth";
-
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
 export const DELETE = auth(async (req) => {
   if (!req.auth) {
-    return new Response("Not authenticated", { status: 401 });
+    return NextResponse.json("Not authenticated", { status: 401 });
   }
 
   const currentUser = req.auth.user;
   if (!currentUser) {
-    return new Response("Invalid user", { status: 401 });
+    return NextResponse.json("Invalid user", { status: 401 });
   }
 
   try {
@@ -19,10 +19,10 @@ export const DELETE = auth(async (req) => {
       },
     });
   } catch (error) {
-    return new Response("Internal server error", { status: 500 });
+    return NextResponse.json("Internal server error", { status: 500 });
   }
 
-  return new Response("User deleted successfully!", {
+  return NextResponse.json("User deleted successfully!", {
     status: 200,
     headers: {
       'Access-Control-Allow-Origin': '*',

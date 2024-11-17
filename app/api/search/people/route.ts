@@ -37,7 +37,7 @@ export async function GET(request: Request) {
       take: 3,
     });
 
-    return new Response(JSON.stringify(people), {
+    return NextResponse.json(people, {
       status: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',

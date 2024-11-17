@@ -25,7 +25,7 @@ export async function GET(request: Request) {
       return NextResponse.json({ error: "Session not found" }, { status: 404 });
     }
 
-    return new Response(JSON.stringify(session), {
+    return NextResponse.json(session, {
       status: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',

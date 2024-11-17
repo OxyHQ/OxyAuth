@@ -1,4 +1,5 @@
 import { ImageResponse } from "@vercel/og"
+import { NextResponse } from "next/server"
 
 import { ogImageSchema } from "@/lib/validations/og"
 
@@ -155,13 +156,6 @@ export async function GET(req: Request) {
       }
     )
   } catch (error) {
-    return new Response(`Failed to generate image`, {
-      status: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      },
-    })
+    return NextResponse.json({ error: "Failed to generate image" }, { status: 500 });
   }
 }

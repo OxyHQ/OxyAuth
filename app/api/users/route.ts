@@ -36,7 +36,7 @@ export async function GET(request: Request) {
       take: limit ? parseInt(limit) : undefined,
     });
 
-    return new Response(JSON.stringify(users), {
+    return NextResponse.json(users, {
       status: 200,
       headers: {
         'Access-Control-Allow-Origin': '*',
