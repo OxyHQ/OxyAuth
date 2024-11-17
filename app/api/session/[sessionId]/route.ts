@@ -1,39 +1,40 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 import { prisma } from "@/lib/db";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const sessionId = searchParams.get("sessionId") as string;
+export async function GET(
+  request: Request,
+  context: {
+    params: {
+      sessionId: string;
+    };
+  },
+) {
+  const { sessionId } = context.params;
 
-  const sessionIdSchema = z.string().min(1);
-  const zod = sessionIdSchema.safeParse(sessionId);
+  const idSchema = z.string();
+  const zod = idSchema.safeParse(sessionId);
 
   if (!zod.success) {
-    return NextResponse.json(zod.error.formErrors, { status: 400 });
+    return NextResponse.json(zod.error, { status: 400 });
   }
 
-  try {
-    const session = await prisma.session.findUnique({
-      where: {
-        id: sessionId,
-      },
-    });
-
-    if (!session) {
-      return NextResponse.json({ error: "Session not found" }, { status: 404 });
-    }
-
-    return new Response(JSON.stringify(session), {
-      status: 200,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      },
-    });
-  } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+  const session = await prisma.session.findUnique({
+    where: {
+      id: sessionId,
+    },
+  });
+  if (!session) {
+    return NextResponse.json({ error: "Session not found" }, { status: 404 });
   }
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session.userId,
+    },
+  });
+  if (!user) {
+    return NextResponse.json({ error: "Not signed in" }, { status: 401 });
+  }
+  return NextResponse.json({ user: user });
 }
