@@ -49,6 +49,13 @@ export default async function AdminPage() {
     },
   });
 
+  const sanitizedRecentUsers = recentUsers.map((user) => ({
+    id: user.id,
+    name: user.name ?? "",
+    email: user.email ?? "",
+    createdAt: user.createdAt,
+  }));
+
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
 
@@ -79,7 +86,7 @@ export default async function AdminPage() {
             value={userGrowthPercentage.toFixed(1) + "%"}
           />
         </div>
-        <RecentUsersList users={recentUsers} />
+        <RecentUsersList users={sanitizedRecentUsers} />
       </div>
     </>
   );

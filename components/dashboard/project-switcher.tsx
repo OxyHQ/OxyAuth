@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Check, ChevronsUpDown, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -58,9 +59,11 @@ export default function AccountSwitcher({
             <div className="flex items-center space-x-3 pr-2">
               {selected && (
                 <>
-                  <img
+                  <Image
                     src={selected.image}
                     alt={selected.name}
+                    width={24}
+                    height={24}
                     className="size-3 shrink-0 rounded-full"
                   />
                   <div className="flex items-center space-x-3">
@@ -115,9 +118,11 @@ function AccountList({
           href="#"
           onClick={() => setOpenPopover(false)}
         >
-          <img
+          <Image
             src={image}
             alt={name}
+            width={24}
+            height={24}
             className="size-3 shrink-0 rounded-full"
           />
           <span
