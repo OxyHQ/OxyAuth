@@ -37,6 +37,9 @@ export const {
 
         if (dbUser) {
           session.user.role = dbUser.role;
+          session.user.name = dbUser.name;
+          session.user.email = dbUser.email;
+          session.user.image = dbUser.image;
 
           const sessions = await prisma.session.findMany({
             where: { userId: dbUser.id },

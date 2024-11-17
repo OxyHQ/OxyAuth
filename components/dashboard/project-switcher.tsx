@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Check, ChevronsUpDown, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -26,18 +26,23 @@ export default function AccountSwitcher({
 }) {
   const { data: session, status } = useSession();
   const [openPopover, setOpenPopover] = useState(false);
+  const [accounts, setAccounts] = useState<AccountType[]>([]);
+
+  useEffect(() => {
+    if (session?.user) {
+      const fetchAccounts = async () => {
+        const response = await fetch(`/api/users?id=${session.user.id}`);
+        const data = await response.json();
+        setAccounts(data);
+      };
+
+      fetchAccounts();
+    }
+  }, [session]);
 
   if (!session || status === "loading") {
     return <AccountSwitcherPlaceholder />;
   }
-
-  const accounts: AccountType[] = session.user
-    ? session.user.sessions.map((session) => ({
-        name: session.user?.name || "Unknown",
-        email: session.user.email,
-        image: session.user.image,
-      }))
-    : [];
 
   const selected: AccountType = accounts[0];
 
