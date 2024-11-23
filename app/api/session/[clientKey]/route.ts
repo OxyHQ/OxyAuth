@@ -1,13 +1,17 @@
 import { NextResponse } from "next/server";
+
 import { prisma } from "@/lib/db";
 
-export async function GET(request: Request, { params }: { params: { clientKey: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { clientKey: string } },
+) {
   const { clientKey } = params;
 
   try {
     const session = await prisma.session.findUnique({
       where: {
-        clientKey: clientKey,
+        sessionToken: clientKey,
       },
       include: {
         user: true,
@@ -37,9 +41,9 @@ export async function GET(request: Request, { params }: { params: { clientKey: s
     return NextResponse.json(sessionData, {
       status: 200,
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
       },
     });
   } catch (error: any) {
