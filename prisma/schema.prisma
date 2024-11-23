@@ -80,3 +80,32 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map(name: "verification_tokens")
 }
+
+model OAuthClient {
+  id          String   @id @default(cuid())
+  clientId    String   @unique
+  clientSecret String
+  redirectUri String
+  grants      String[]
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "oauth_clients")
+}
+
+model OAuthToken {
+  id          String   @id @default(cuid())
+  accessToken String   @unique
+  accessTokenExpiresAt DateTime
+  refreshToken String? @unique
+  refreshTokenExpiresAt DateTime?
+  clientId    String
+  userId      String
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+
+  client OAuthClient @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "oauth_tokens")
+}

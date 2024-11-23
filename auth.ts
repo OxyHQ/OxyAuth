@@ -2,6 +2,7 @@ import authConfig from "@/auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { UserRole } from "@prisma/client";
 import NextAuth, { type DefaultSession } from "next-auth";
+import OAuthServer from "@/server/oauth-server"; // P668e
 
 import { prisma } from "@/lib/db";
 import { getUserById } from "@/lib/user";
@@ -56,3 +57,5 @@ export const {
   ...authConfig,
   // debug: process.env.NODE_ENV !== "production"
 });
+
+export const oauthServer = OAuthServer; // P0ad7

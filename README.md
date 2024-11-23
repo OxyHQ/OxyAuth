@@ -157,6 +157,87 @@ The user statistics feature in the admin panel uses Prisma to fetch data from th
 - **Admin Users**: The number of users with the ADMIN role.
 - **Regular Users**: The number of users with the USER role.
 
+## Using the OAuth Server
+
+The OAuth server is implemented using `express-oauth-server`. Follow the steps below to use it:
+
+### 1. Install Dependencies
+
+Ensure you have the necessary dependencies installed. If not, add `express-oauth-server` to your `package.json`:
+
+```sh
+pnpm add express-oauth-server
+```
+
+### 2. Configure the OAuth Server
+
+The OAuth server is configured in the `server/oauth-server.ts` file. It uses `express-oauth-server` to handle OAuth token requests.
+
+### 3. Update Prisma Schema
+
+Ensure your `prisma/schema.prisma` file includes the necessary tables for OAuth tokens and clients:
+
+```prisma
+model OAuthClient {
+  id          String   @id @default(cuid())
+  clientId    String   @unique
+  clientSecret String
+  redirectUri String
+  grants      String[]
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+
+  @@map(name: "oauth_clients")
+}
+
+model OAuthToken {
+  id          String   @id @default(cuid())
+  accessToken String   @unique
+  accessTokenExpiresAt DateTime
+  refreshToken String? @unique
+  refreshTokenExpiresAt DateTime?
+  clientId    String
+  userId      String
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+
+  client OAuthClient @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map(name: "oauth_tokens")
+}
+```
+
+### 4. Add API Routes
+
+Add new API routes in `app/api` to handle OAuth token requests and client management. For example:
+
+#### Token Route
+
+```ts
+import OAuthServer from "@/server/oauth-server";
+
+export async function POST(request: Request) {
+  const oauth = OAuthServer;
+  const response = await oauth.token(request, new Response());
+
+  return response;
+}
+```
+
+#### Client Route
+
+```ts
+import OAuthServer from "@/server/oauth-server";
+
+export async function POST(request: Request) {
+  const oauth = OAuthServer;
+  const response = await oauth.authorize(request, new Response());
+
+  return response;
+}
+```
+
 ## Author
 
 This project is based on [Next SaaS Stripe Starter](https://next-saas-stripe-starter.vercel.app/).
