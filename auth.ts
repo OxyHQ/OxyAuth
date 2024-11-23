@@ -1,8 +1,7 @@
 import authConfig from "@/auth.config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { UserRole } from "@prisma/client";
-import NextAuth, { type DefaultSession } from "next-auth";
-import OAuthServer from "@/server/oauth-server"; // P668e
+import OAuthServer from "@/server/oauth-server"; // Updated import to use the updated OAuthServer
 
 import { prisma } from "@/lib/db";
 import { getUserById } from "@/lib/user";
@@ -58,4 +57,4 @@ export const {
   // debug: process.env.NODE_ENV !== "production"
 });
 
-export const oauthServer = OAuthServer; // P0ad7
+export const oauthServer = OAuthServer; // Ensure the auth function uses the updated OAuthServer

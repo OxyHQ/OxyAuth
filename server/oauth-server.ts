@@ -1,10 +1,11 @@
 import express from 'express';
 import OAuthServer from 'express-oauth-server';
+import oauthModel from './oauth-model'; // Importing the implemented OAuth model
 
 const app = express();
 
 const oauth = new OAuthServer({
-  model: require('./oauth-model'), // See https://github.com/oauthjs/node-oauth2-server for specification
+  model: oauthModel, // Using the imported OAuth model
   grants: ['password'],
   debug: true,
 });

@@ -1,4 +1,3 @@
-// import "server-only";
 import { PrismaClient } from "@prisma/client";
 
 declare global {
@@ -15,3 +14,8 @@ if (process.env.NODE_ENV === "production") {
   }
   prisma = global.cachedPrisma;
 }
+
+// Ensure the Prisma client is used in the oauth-model functions
+import { getAccessToken, getClient, saveToken, getUser, verifyScope } from '@/server/oauth-model';
+
+export { getAccessToken, getClient, saveToken, getUser, verifyScope };
