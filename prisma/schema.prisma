@@ -50,24 +50,25 @@ model Session {
 }
 
 model User {
-  id                   String    @id @default(cuid())
-  username             String?   @unique
-  name                 String?
-  lastname             String?
-  email                String?   @unique
-  emailVerified        DateTime?
-  image                String?
-  description          String?
-  color                String?
-  createdAt            DateTime  @default(now()) @map(name: "created_at")
-  updatedAt            DateTime  @default(now()) @map(name: "updated_at")
-  role                 UserRole  @default(USER)
-  verified             Boolean   @default(false)
-  isOAuth              Boolean   @default(false)
-  isTwoFactorEnabled   Boolean   @default(false)
+  id                 String    @id @default(cuid())
+  username           String?   @unique
+  name               String?
+  lastname           String?
+  email              String?   @unique
+  emailVerified      DateTime?
+  image              String?
+  description        String?
+  color              String?
+  createdAt          DateTime  @default(now()) @map(name: "created_at")
+  updatedAt          DateTime  @default(now()) @map(name: "updated_at")
+  role               UserRole  @default(USER)
+  verified           Boolean   @default(false)
+  isOAuth            Boolean   @default(false)
+  isTwoFactorEnabled Boolean   @default(false)
 
-  accounts Account[]
-  sessions Session[]
+  accounts    Account[]
+  sessions    Session[]
+  oauthTokens OAuthToken[]
 
   @@map(name: "users")
 }
@@ -82,27 +83,28 @@ model VerificationToken {
 }
 
 model OAuthClient {
-  id          String   @id @default(cuid())
-  clientId    String   @unique
+  id           String       @id @default(cuid())
+  clientId     String       @unique
   clientSecret String
-  redirectUri String
-  grants      String[]
-  createdAt   DateTime @default(now()) @map(name: "created_at")
-  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+  redirectUri  String
+  grants       String[]
+  createdAt    DateTime     @default(now()) @map(name: "created_at")
+  updatedAt    DateTime     @default(now()) @map(name: "updated_at")
+  OAuthToken   OAuthToken[]
 
   @@map(name: "oauth_clients")
 }
 
 model OAuthToken {
-  id          String   @id @default(cuid())
-  accessToken String   @unique
-  accessTokenExpiresAt DateTime
-  refreshToken String? @unique
+  id                    String    @id @default(cuid())
+  accessToken           String    @unique
+  accessTokenExpiresAt  DateTime
+  refreshToken          String?   @unique
   refreshTokenExpiresAt DateTime?
-  clientId    String
-  userId      String
-  createdAt   DateTime @default(now()) @map(name: "created_at")
-  updatedAt   DateTime @default(now()) @map(name: "updated_at")
+  clientId              String
+  userId                String
+  createdAt             DateTime  @default(now()) @map(name: "created_at")
+  updatedAt             DateTime  @default(now()) @map(name: "updated_at")
 
   client OAuthClient @relation(fields: [clientId], references: [id], onDelete: Cascade)
   user   User        @relation(fields: [userId], references: [id], onDelete: Cascade)
