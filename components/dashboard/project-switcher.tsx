@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Check, ChevronsUpDown, Plus } from "lucide-react";
 import { useSession } from "next-auth/react";
@@ -40,7 +40,7 @@ export default function AccountSwitcher({
     }
   }, [session]);
 
-  if (!session || status === "loading") {
+  if (!session || status !== "authenticated") {
     return <AccountSwitcherPlaceholder />;
   }
 

@@ -32,13 +32,13 @@ export const {
   },
   callbacks: {
     async session({ session }) {
-      if (session.user) {
+      if (session.user && session.user.id) {
         const dbUser = await getUserById(session.user.id);
 
         if (dbUser) {
           session.user.role = dbUser.role;
           session.user.name = dbUser.name;
-          session.user.email = dbUser.email;
+          session.user.email = dbUser.email ?? "";
           session.user.image = dbUser.image;
 
           const sessions = await prisma.session.findMany({

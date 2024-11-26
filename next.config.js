@@ -39,8 +39,7 @@ module.exports = {
           { key: "Access-Control-Allow-Credentials", value: "true" },
           {
             key: "Access-Control-Allow-Origin",
-            value:
-              "https://auth.oxy.so https://mention.earth http://localhost:3000",
+            value: "*", // Allow all origins or specify a single origin
           },
           {
             key: "Access-Control-Allow-Methods",
