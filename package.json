@@ -4,7 +4,7 @@
   "private": true,
   "author": {
     "name": "Nate Isern Alvarez",
-    "url": "https://twitter.com/nateisern"
+    "url": "https://mention.earth/nateisern"
   },
   "scripts": {
     "dev": "next dev",
